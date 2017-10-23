@@ -17,4 +17,5 @@ version = count_travis()
 
 @init
 def set_properties(project):
-    project.depend_on('fabric3')
+    project.depends_on('docopt')
+    project.depends_on('fabric3')
