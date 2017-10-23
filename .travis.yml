@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+install:
+  - apt-get update
+  - apt-get install tree
+  - pip install -U pip
+  - pip install pybuilder
+  - pyb install_dependencies
+script:
+  - pyb run_unit_tests -X
