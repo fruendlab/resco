@@ -1,4 +1,3 @@
-import os
 import jinja2
 
 from . import templates
@@ -19,15 +18,19 @@ def start_project(name):
         },
         'target': {
             'results': {
-                'behavour': {},
+                'behaviour': {},
                 'analysis': {},
                 'theory': {},
                 'figures': {},
             },
-        }
+        },
+        'requirements': ['all.txt', 'remote.txt', 'local.txt'],
     })
     with open('README.md', 'w') as f:
-        f.write(jinja2.template(templates.readme).render(module=name))
+        f.write(jinja2.Template(templates.readme).render(module=name))
 
     with open('fabfile.py', 'w') as f:
-        f.write(jinja2.template(templates.fabfile).render())
+        f.write(jinja2.Template(templates.fabfile).render())
+
+    with open('requirements/all.txt', 'w') as f:
+        f.write('resco')
