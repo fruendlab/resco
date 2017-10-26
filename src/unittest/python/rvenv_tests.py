@@ -27,8 +27,22 @@ class TestRemoteVirtualEnv(TestCase):
         venv.init()
         self.mocks['run'].assert_called_once_with('python3 -m venv ANY_VENV')
 
-    def test_init_does_not_create_exists(self):
+    def test_init_does_not_create_existing(self):
         self.mocks['exists'].return_value = True
         venv = rvenv.RemoteVirtualEnv('ANY_VENV')
         venv.init()
         self.mocks['run'].assert_not_called()
+
+    def test_activate_manages_context(self):
+        venv = rvenv.RemoteVirtualEnv('ANY_VENV')
+
+        mock_context = self.mocks['prefix'].return_value
+
+        with venv.activate():
+            self.mocks['prefix'].assert_called_once_with(
+                '. ANY_VENV/bin/activate')
+            mock_context.__enter__.assert_called_once_with()
+            mock_context.__exit__.assert_not_called()
+        mock_context.__exit__.assert_called_once_with(
+            None, None, None
+        )
