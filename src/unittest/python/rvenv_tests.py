@@ -46,3 +46,14 @@ class TestRemoteVirtualEnv(TestCase):
         mock_context.__exit__.assert_called_once_with(
             None, None, None
         )
+
+    def test_install_with_command(self):
+        venv = rvenv.RemoteVirtualEnv('ANY_VENV', ['!ANY_COMMAND'])
+        venv.install()
+        self.assertIn(mock.call('ANY_COMMAND'), self.mocks['run'].mock_calls)
+
+    def test_install_updates_pip(self):
+        venv = rvenv.RemoteVirtualEnv('ANY_VENV', ['!ANY_COMMAND'])
+        venv.install()
+        self.assertIn(mock.call('pip install -U pip', pty=False),
+                      self.mocks['run'].mock_calls)
