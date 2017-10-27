@@ -1,14 +1,19 @@
 language: python
 python:
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.6"
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.6'
 install:
-  - sudo apt-get update
-  - sudo apt-get install tree
-  - pip install -U pip
-  - pip install pybuilder
-  - pyb install_dependencies
+- sudo apt-get update
+- sudo apt-get install tree
+- pip install -U pip
+- pip install pybuilder
+- pyb install_dependencies
 script:
-  - pyb run_unit_tests -X
+- pyb run_unit_tests -X
+deploy:
+  provider: pypi
+  user: ingofruend
+  password:
+    secure: cQKEntpmkpCWf4S88mgS4ijKtdVBMIcE2diuRx8P9ZDe7uoe0YJ0WYWrx7NK+LLCQj4i2TfL/3xoEeL1JuRPfUvL2/zVfBD+fK60weRc/VVt1+s5BvaySU8YeEk/hB7qB4+C26CCNZWmlg7mOueIdYFOHkUOTQ/ZxJuyuhSdYJlR9mn3M3Ap42zenqktdKfblhmyhLos+o2FFAan1WWd1E3Ujgu1biW0m3dTfqfdhwqmVG7O8BsocCvTE40Nrabt/1bI9tUflKC8d+DJXYPL52+bXtPe33ErC/T37OE5RquBOeL6CkhgOvdud7NZEF4izXzTTgb2GQGrCusecffyBidtkaXAHNt+8tb8QDINdvIpZWPqPGt7s8wgIIK1eGng1Hm1jFppgPB+e6RkWrVSxePZAjrdJN7bgdb8kD+Lb8Wjfl06osLtmZrRNtsxvYg4bRujs+uGvDskL0UL6voXMMjSw/gfQwffiQ8OYKeuCCC6Fb+pdRWLQ5SYU0Vc61xkk+B9PiLqLcAi7nxBxKN7TW2jg28KIGoES/nHEl4dvFHjYtYDBMqkZmBA1kLcvFHTnhv70rLbBS1tZ+Bj4mJxkorMYIDXNYQLW4DufmMgdRsrEAfN3dpWwc39bucRGP4RrmZTHBo2/DuIRV0gXR/+6UPlSBhLGge8ZGMkEHazvO8=
