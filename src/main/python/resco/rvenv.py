@@ -18,7 +18,7 @@ class VirtualEnv(object):
         with self.activate():
             self.runner('pip install -U pip', pty=False)
             for d in self.dependencies:
-                if d == 'requirements.txt':
+                if d[-4:] == '.txt':
                     self.install_from_requirements()
                 elif d[0] == '!':
                     # Custom command after exclamation mark
