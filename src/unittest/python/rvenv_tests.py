@@ -50,10 +50,24 @@ class TestRemoteVirtualEnv(TestCase):
     def test_install_with_command(self):
         venv = rvenv.RemoteVirtualEnv('ANY_VENV', ['!ANY_COMMAND'])
         venv.install()
-        self.assertIn(mock.call('ANY_COMMAND'), self.mocks['run'].mock_calls)
+        self.mocks['run'].assert_any_call('ANY_COMMAND')
 
     def test_install_updates_pip(self):
-        venv = rvenv.RemoteVirtualEnv('ANY_VENV', ['!ANY_COMMAND'])
+        venv = rvenv.RemoteVirtualEnv('ANY_VENV', [])
         venv.install()
-        self.assertIn(mock.call('pip install -U pip', pty=False),
-                      self.mocks['run'].mock_calls)
+        self.mocks['run'].assert_any_call('pip install -U pip', pty=False)
+
+    def test_install_with_package(self):
+        venv = rvenv.RemoteVirtualEnv('ANY_VENV', ['ANY_PACKAGE'])
+        venv.install()
+        self.mocks['run'].assert_any_call('pip install -U ANY_PACKAGE',
+                                          pty=False)
+
+    @mock.patch('resco.rvenv.requirements_file')
+    def test_install_with_requirements(self, mock_requirements_file):
+        mock_requirements_file.return_value.__enter__.return_value = \
+                '/tmp/ANY_FILE'
+        venv = rvenv.RemoteVirtualEnv('ANY_VENV', ['requirements.txt'])
+        venv.install()
+        self.mocks['run'].assert_any_call('pip install -r /tmp/ANY_FILE',
+                                          pty=False)

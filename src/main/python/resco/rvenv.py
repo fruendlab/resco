@@ -25,7 +25,7 @@ class VirtualEnv(object):
                     self.runner(d[1:])
                 else:
                     # Python package
-                    self.runner('pip install {}'.format(d), pty=False)
+                    self.runner('pip install -U {}'.format(d), pty=False)
 
     def init(self):
         if not self.exists():
