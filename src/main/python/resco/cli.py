@@ -30,7 +30,7 @@ def start_project(name):
         f.write(jinja2.Template(templates.readme).render(module=name))
 
     with open('fabfile.py', 'w') as f:
-        f.write(jinja2.Template(templates.fabfile).render())
+        f.write(jinja2.Template(templates.fabfile).render(module=name))
 
     with open('requirements/all.txt', 'w') as f:
         f.write('resco')

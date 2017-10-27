@@ -20,3 +20,4 @@ def set_properties(project):
     project.depends_on('docopt')
     project.depends_on('fabric3')
     project.depends_on('jinja2')
+    project.set_property('coverage_exceptions', ['resco.templates'])
