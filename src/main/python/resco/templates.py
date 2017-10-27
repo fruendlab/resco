@@ -6,7 +6,7 @@ This is an empty readme.
 
 fabfile = """
 from fabric.api import local
-from resco api
+from resco import api
 
 remote_working_dir = ''
 venv = api.RemoteVirtualEnv({{ module }}-env,
