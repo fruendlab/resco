@@ -5,10 +5,10 @@ This is an empty readme.
 """
 
 fabfile = """
-from fabric.api import local
+from fabric.api import local, cd
 from resco import api
 
-remote_working_dir = ''
+remote_working_dir = '{{ module }}-wd'
 venv = api.RemoteVirtualEnv('{{ module }}-env',
                             dependencies=['requirements/all.txt',
                                           'requirements/remote.txt'])
@@ -21,7 +21,8 @@ def run_script(script_name):
 
 
 def update_venv():
-    venv.install()
+    with cd(remote_working_dir):
+        venv.install()
 
 
 def install_local():

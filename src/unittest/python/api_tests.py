@@ -38,11 +38,11 @@ class TestRunScript(TestCase):
 
     def test_copies_files(self):
         api.run_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
-        self.mocks['put'].assert_any_call('ANY_MODULE', '')
+        self.mocks['put'].assert_any_call('ANY_MODULE')
 
     def test_copies_scripts(self):
         api.run_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
-        self.mocks['put'].assert_any_call('scripts', '')
+        self.mocks['put'].assert_any_call('scripts')
 
     def test_supports_working_dir(self):
 

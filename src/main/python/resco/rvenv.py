@@ -19,7 +19,7 @@ class VirtualEnv(object):
             self.runner('pip install -U pip', pty=False)
             for d in self.dependencies:
                 if d[-4:] == '.txt':
-                    self.install_from_requirements()
+                    self.install_from_requirements(d)
                 elif d[0] == '!':
                     # Custom command after exclamation mark
                     self.runner(d[1:])
@@ -45,8 +45,8 @@ class RemoteVirtualEnv(VirtualEnv):
     def exists(self):
         return exists(self.envpath)
 
-    def install_from_requirements(self):
-        with requirements_file('requirements.txt') as fname:
+    def install_from_requirements(self, reqfile='requirements.txt'):
+        with requirements_file(reqfile) as fname:
             self.runner('pip install -r {}'.format(fname), pty=False)
 
     @contextmanager
