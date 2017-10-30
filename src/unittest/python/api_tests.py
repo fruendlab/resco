@@ -38,21 +38,11 @@ class TestRunScript(TestCase):
 
     def test_copies_files(self):
         api.run_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
-        self.mocks['put'].assert_any_call('ANY_MODULE')
+        self.mocks['put'].assert_any_call('ANY_MODULE', 'ANY_DIR')
 
     def test_copies_scripts(self):
         api.run_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
-        self.mocks['put'].assert_any_call('scripts')
-
-    def test_supports_working_dir(self):
-
-        cv = ContextVerifier()
-        cv.attach(self.mocks['cd'], self.mocks['put'])
-
-        api.run_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
-
-        self.mocks['cd'].assert_called_once_with('ANY_DIR')
-        self.assertEqual(len(cv.calls), 2)
+        self.mocks['put'].assert_any_call('scripts', 'ANY_DIR')
 
     def test_runs_remotely(self):
         cv = ContextVerifier()
