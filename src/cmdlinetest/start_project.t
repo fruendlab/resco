@@ -27,3 +27,23 @@ Create project and check the expected files are there
   ./unittests/
   
   15 directories, 6 files
+
+  $ echo "print('Hello world')" > scripts/tools/hello.py
+  $ fab -H localhost -p $PASSWORD update_venv > silence
+  $ fab -H localhost -p $PASSWORD run_script:tools/hello.py
+  
+  -* (re)
+  Ran 0 tests in 0.000s
+  
+  OK
+  [localhost] Executing task 'run_script'
+  [localhost] local: python -m unittest discover unittests/
+  [localhost] put: testproject/__init__.py -> testproject-wd/testproject/__init__.py
+  [localhost] put: scripts/tools/hello.py -> testproject-wd/scripts/tools/hello.py
+  [localhost] run: python scripts/tools/hello.py
+  [localhost] out: Hello world
+  [localhost] out: 
+  
+  
+  Done.
+  Disconnecting from localhost... done.
