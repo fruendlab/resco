@@ -4,7 +4,7 @@ from .rvenv import RemoteVirtualEnv
 
 
 def run_unit_tests():
-    local('python -m unittest discover unittests/')
+    local("python -m unittest discover -s unittests/ -p '*tests.py'")
 
 
 def run_script(script_name, venv, module, working_dir):
