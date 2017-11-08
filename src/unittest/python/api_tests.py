@@ -64,15 +64,6 @@ class TestRunCommand(TestCase):
             'scripts/ANY_SCRIPT:ANY_MODULE')
         self.assertEqual(len(cv.calls), 1)
 
-    def test_works_with_prefix(self):
-        api.run_command('{cmd}:{module}',
-                        'scripts/ANY_SCRIPT',
-                        self.mock_venv,
-                        'ANY_MODULE',
-                        'ANY_DIR')
-        self.mocks['run'].assert_called_once_with(
-            'scripts/ANY_SCRIPT:ANY_MODULE')
-
     @mock.patch('resco.api.run_unit_tests')
     def test_runs_unit_tests_first(self, mock_run_unit_tests):
         api.run_command('{cmd}:{module}',
@@ -121,3 +112,15 @@ class TestRunScriptStartScript(TestCase):
             'ANY_MODULE',
             'ANY_DIR',
         )
+
+
+class TestCreateCommand(TestCase):
+
+    def test_with_prefix(self):
+        cmd = api.create_command('scripts/ANY_SCRIPT')
+        self.assertEqual(cmd, 'python scripts/ANY_SCRIPT')
+
+    def test_without_prefix(self):
+        cmd = api.create_command('ANY_SCRIPT')
+        self.assertEqual(cmd, 'python scripts/ANY_SCRIPT')
+
