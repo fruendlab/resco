@@ -37,7 +37,7 @@ Create project and check the expected files are there
   
   OK
   [localhost] Executing task 'run_script'
-  [localhost] local: python -m unittest discover unittests/
+  [localhost] local: python -m unittest discover -s unittests/ -p '*tests.py'
   [localhost] put: testproject/__init__.py -> testproject-wd/testproject/__init__.py
   [localhost] put: scripts/tools/hello.py -> testproject-wd/scripts/tools/hello.py
   [localhost] run: python scripts/tools/hello.py
