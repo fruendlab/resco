@@ -35,7 +35,7 @@ def run_command(template, cmd, venv, module, working_dir):
 def create_command(script_name):
     if not script_name.startswith('scripts/'):
         script_name = 'scripts/{}'.format(script_name)
-    return 'python {}'.format(script_name)
+    return 'PYTHONPATH=. python {}'.format(script_name)
 
 
 def prepare(module, working_dir):

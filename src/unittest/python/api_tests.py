@@ -97,7 +97,7 @@ class TestRunScriptStartScript(TestCase):
         api.run_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
         self.mock_run_command.assert_called_once_with(
             '{cmd}',
-            'python scripts/ANY_SCRIPT',
+            'PYTHONPATH=. python scripts/ANY_SCRIPT',
             self.mock_venv,
             'ANY_MODULE',
             'ANY_DIR',
@@ -107,7 +107,7 @@ class TestRunScriptStartScript(TestCase):
         api.start_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
         self.mock_run_command.assert_called_once_with(
             'tmux new-session -d -s {module} "{cmd}"',
-            'python scripts/ANY_SCRIPT',
+            'PYTHONPATH=. python scripts/ANY_SCRIPT',
             self.mock_venv,
             'ANY_MODULE',
             'ANY_DIR',
@@ -118,9 +118,9 @@ class TestCreateCommand(TestCase):
 
     def test_with_prefix(self):
         cmd = api.create_command('scripts/ANY_SCRIPT')
-        self.assertEqual(cmd, 'python scripts/ANY_SCRIPT')
+        self.assertEqual(cmd, 'PYTHONPATH=. python scripts/ANY_SCRIPT')
 
     def test_without_prefix(self):
         cmd = api.create_command('ANY_SCRIPT')
-        self.assertEqual(cmd, 'python scripts/ANY_SCRIPT')
+        self.assertEqual(cmd, 'PYTHONPATH=. python scripts/ANY_SCRIPT')
 
