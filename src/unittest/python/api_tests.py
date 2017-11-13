@@ -124,3 +124,11 @@ class TestCreateCommand(TestCase):
         cmd = api.create_command('ANY_SCRIPT')
         self.assertEqual(cmd, 'PYTHONPATH=. python scripts/ANY_SCRIPT')
 
+
+class TestFetchLs(TestCase):
+
+    @mock.patch('resco.api.get')
+    def test_fetch_fetches_to_same_location(self, mock_get):
+        api.fetch('ANY_WORKING_DIR', '*.py')
+        mock_get.assert_called_once_with(remote_path='target/*.py',
+                                         local_path='%(path)')

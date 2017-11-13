@@ -1,4 +1,4 @@
-from fabric.api import local, put, run, cd
+from fabric.api import local, put, run, cd, get
 
 from .rvenv import RemoteVirtualEnv
 
@@ -42,3 +42,14 @@ def prepare(module, working_dir):
     run_unit_tests()
     put(module, working_dir)
     put('scripts', working_dir)
+
+
+def ls(working_dir, glob_pattern='*'):
+    with cd(working_dir):
+        run('ls {}'.format(glob_pattern))
+
+
+def fetch(working_dir, glob_pattern='*'):
+    with cd(working_dir):
+        get(remote_path='target/' + glob_pattern,
+            local_path='%(path)')

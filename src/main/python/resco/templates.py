@@ -27,4 +27,12 @@ def update_venv():
 
 def install_local():
     local('pip install -r requirements/all.txt -r requirements/local.txt')
+
+
+def ls(glob_pattern='*'):
+    api.ls(remote_working_dir, glob_pattern)
+
+
+def fetch(glob_pattern='*'):
+    api.fetch(remote_working_dir, glob_pattern)
 """
