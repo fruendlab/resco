@@ -90,11 +90,18 @@ class TestRunScriptStartScript(TestCase):
         self.mock_run_command = mock.patch('resco.api.run_command').start()
         self.mock_venv = mock.MagicMock()
 
+        class MockEnv(object):
+            venv = self.mock_venv
+            module = 'ANY_MODULE'
+            working_dir = 'ANY_DIR'
+
+        self.mock_env = mock.patch('resco.api.env', MockEnv()).start()
+
     def tearDown(self):
         mock.patch.stopall()
 
     def test_run_script_calls_correctly(self):
-        api.run_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
+        api.run_script('ANY_SCRIPT')
         self.mock_run_command.assert_called_once_with(
             '{cmd}',
             'PYTHONPATH=. python scripts/ANY_SCRIPT',
@@ -104,7 +111,7 @@ class TestRunScriptStartScript(TestCase):
         )
 
     def test_start_script_calls_correctly(self):
-        api.start_script('ANY_SCRIPT', self.mock_venv, 'ANY_MODULE', 'ANY_DIR')
+        api.start_script('ANY_SCRIPT')
         self.mock_run_command.assert_called_once_with(
             'tmux new-session -d -s {module} "{cmd}"',
             'PYTHONPATH=. python scripts/ANY_SCRIPT',
@@ -127,8 +134,18 @@ class TestCreateCommand(TestCase):
 
 class TestFetchLs(TestCase):
 
+    def setUp(self):
+        self.mock_venv = mock.MagicMock()
+
+        class MockEnv(object):
+            venv = self.mock_venv
+            module = 'ANY_MODULE'
+            working_dir = 'ANY_DIR'
+
+        self.mock_env = mock.patch('resco.api.env', MockEnv()).start()
+
     @mock.patch('resco.api.get')
     def test_fetch_fetches_to_same_location(self, mock_get):
-        api.fetch('ANY_WORKING_DIR', '*.py')
+        api.fetch('*.py')
         mock_get.assert_called_once_with(remote_path='target/*.py',
                                          local_path='%(path)')

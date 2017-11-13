@@ -5,11 +5,12 @@ This is an empty readme.
 """
 
 fabfile = """
-from fabric.api import local, cd
+from fabric.api import local, cd, env
 from resco import api
 
-remote_working_dir = '{{ module }}-wd'
-venv = api.RemoteVirtualEnv('{{ module }}-env',
+env.module_name = '{{ module }}'
+env.remote_working_dir = '{{ module }}-wd'
+env.venv = api.RemoteVirtualEnv('{{ module }}-env',
                             dependencies=['requirements/all.txt',
                                           'requirements/remote.txt'])
 
@@ -17,11 +18,11 @@ run_unit_tests = api.run_unit_tests
 
 
 def run_script(script_name):
-    api.run_script(script_name, venv, '{{ module }}', remote_working_dir)
+    api.run_script(script_name, env.venv, '{{ module }}', env.remote_working_dir)
 
 
 def update_venv():
-    with cd(remote_working_dir):
+    with cd(env.remote_working_dir):
         venv.install()
 
 

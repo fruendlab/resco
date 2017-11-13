@@ -1,4 +1,4 @@
-from fabric.api import local, put, run, cd, get
+from fabric.api import local, put, run, cd, get, env
 
 from .rvenv import RemoteVirtualEnv
 
@@ -9,20 +9,20 @@ def run_unit_tests():
     local("python -m unittest discover -s unittests/ -p '*tests.py'")
 
 
-def run_script(script_name, venv, module, working_dir):
+def run_script(script_name):
     run_command('{cmd}',
                 create_command(script_name),
-                venv,
-                module,
-                working_dir)
+                env.venv,
+                env.module,
+                env.working_dir)
 
 
-def start_script(script_name, venv, module, working_dir):
+def start_script(script_name):
     run_command('tmux new-session -d -s {module} "{cmd}"',
                 create_command(script_name),
-                venv,
-                module,
-                working_dir)
+                env.venv,
+                env.module,
+                env.working_dir)
 
 
 def run_command(template, cmd, venv, module, working_dir):
@@ -44,12 +44,12 @@ def prepare(module, working_dir):
     put('scripts', working_dir)
 
 
-def ls(working_dir, glob_pattern='*'):
-    with cd(working_dir):
+def ls(glob_pattern='*'):
+    with cd(env.working_dir):
         run('ls {}'.format(glob_pattern))
 
 
-def fetch(working_dir, glob_pattern='*'):
-    with cd(working_dir):
+def fetch(glob_pattern='*'):
+    with cd(env.working_dir):
         get(remote_path='target/' + glob_pattern,
             local_path='%(path)')
