@@ -92,7 +92,7 @@ class TestRunScriptStartScript(TestCase):
 
         class MockEnv(object):
             venv = self.mock_venv
-            module = 'ANY_MODULE'
+            module_name = 'ANY_MODULE'
             working_dir = 'ANY_DIR'
 
         self.mock_env = mock.patch('resco.api.env', MockEnv()).start()
@@ -139,7 +139,7 @@ class TestFetchLs(TestCase):
 
         class MockEnv(object):
             venv = self.mock_venv
-            module = 'ANY_MODULE'
+            module_name = 'ANY_MODULE'
             working_dir = 'ANY_DIR'
 
         self.mock_env = mock.patch('resco.api.env', MockEnv()).start()

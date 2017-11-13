@@ -9,31 +9,21 @@ from fabric.api import local, cd, env
 from resco import api
 
 env.module_name = '{{ module }}'
-env.remote_working_dir = '{{ module }}-wd'
+env.working_dir = '{{ module }}-wd'
 env.venv = api.RemoteVirtualEnv('{{ module }}-env',
-                            dependencies=['requirements/all.txt',
-                                          'requirements/remote.txt'])
+                            dependencies=['requirements/remote.txt',
+                                          'requirements/all.txt'])
 
 run_unit_tests = api.run_unit_tests
-
-
-def run_script(script_name):
-    api.run_script(script_name, env.venv, '{{ module }}', env.remote_working_dir)
-
-
-def update_venv():
-    with cd(env.remote_working_dir):
-        venv.install()
+run_script = api.run_script
+update_venv = api.update_venv
+ls = api.ls
+fetch = api.fetch
+copy_data = api.copy_data
+initialize_remote = api.initialize_remote
+update_venv = api.update_venv
 
 
 def install_local():
     local('pip install -r requirements/all.txt -r requirements/local.txt')
-
-
-def ls(glob_pattern='*'):
-    api.ls(remote_working_dir, glob_pattern)
-
-
-def fetch(glob_pattern='*'):
-    api.fetch(remote_working_dir, glob_pattern)
 """
