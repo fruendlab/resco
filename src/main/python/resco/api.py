@@ -69,7 +69,7 @@ def prepare(module, working_dir):
 
 def ls(glob_pattern='*'):
     with cd(env.working_dir):
-        run('ls {}'.format(glob_pattern))
+        run('ls target/{}'.format(glob_pattern))
 
 
 def fetch(glob_pattern='*'):
