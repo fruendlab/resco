@@ -148,4 +148,4 @@ class TestFetchLs(TestCase):
     def test_fetch_fetches_to_same_location(self, mock_get):
         api.fetch('*.py')
         mock_get.assert_called_once_with(remote_path='target/*.py',
-                                         local_path='%(path)')
+                                         local_path='%(path)s')

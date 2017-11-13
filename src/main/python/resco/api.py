@@ -75,4 +75,4 @@ def ls(glob_pattern='*'):
 def fetch(glob_pattern='*'):
     with cd(env.working_dir):
         get(remote_path='target/' + glob_pattern,
-            local_path='%(path)')
+            local_path='%(path)s')
