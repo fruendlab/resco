@@ -1,0 +1,5 @@
+.coverage
+.venv3
+*__pycache__
+*.swp
+target/
