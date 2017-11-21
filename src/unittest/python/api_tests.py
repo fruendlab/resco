@@ -113,7 +113,17 @@ class TestRunScriptStartScript(TestCase):
     def test_start_script_calls_correctly(self):
         api.start_script('ANY_SCRIPT')
         self.mock_run_command.assert_called_once_with(
-            'tmux new-session -d -s {module} "{cmd}"',
+            'tmux new-session -d -s ANY_MODULE "{cmd}"',
+            'PYTHONPATH=. python scripts/ANY_SCRIPT',
+            self.mock_venv,
+            'ANY_MODULE',
+            'ANY_DIR',
+        )
+
+    def test_start_script_accepts_jobname(self):
+        api.start_script('ANY_SCRIPT', 'ANY_JOBNAME')
+        self.mock_run_command.assert_called_once_with(
+            'tmux new-session -d -s ANY_JOBNAME "{cmd}"',
             'PYTHONPATH=. python scripts/ANY_SCRIPT',
             self.mock_venv,
             'ANY_MODULE',

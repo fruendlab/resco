@@ -17,8 +17,10 @@ def run_script(script_name):
                 env.working_dir)
 
 
-def start_script(script_name):
-    run_command('tmux new-session -d -s {module} "{cmd}"',
+def start_script(script_name, jobname=None):
+    if jobname is None:
+        jobname = env.module_name
+    run_command('tmux new-session -d -s ' + jobname + ' "{cmd}"',
                 create_command(script_name),
                 env.venv,
                 env.module_name,
