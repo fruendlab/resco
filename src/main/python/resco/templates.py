@@ -16,6 +16,7 @@ env.venv = api.RemoteVirtualEnv('{{ module }}-env',
 
 run_unit_tests = api.run_unit_tests
 run_script = api.run_script
+start_script = api.start_script
 update_venv = api.update_venv
 ls = api.ls
 fetch = api.fetch
