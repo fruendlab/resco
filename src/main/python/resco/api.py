@@ -9,19 +9,19 @@ def run_unit_tests():
     local("python -m unittest discover -s unittests/ -p '*tests.py'")
 
 
-def run_script(script_name):
+def run_script(script_name, **args_cmd):
     run_command('{cmd}',
-                create_command(script_name),
+                create_command(script_name, args_cmd),
                 env.venv,
                 env.module_name,
                 env.working_dir)
 
 
-def start_script(script_name, jobname=None):
+def start_script(script_name, jobname=None, **args_cmd):
     if jobname is None:
         jobname = env.module_name
     run_command('tmux new-session -d -s ' + jobname + ' "{cmd}"',
-                create_command(script_name),
+                create_command(script_name, args_cmd),
                 env.venv,
                 env.module_name,
                 env.working_dir)
@@ -57,10 +57,14 @@ def run_command(template, cmd, venv, module, working_dir):
         run(template.format(module=module, cmd=cmd))
 
 
-def create_command(script_name):
+def create_command(script_name, args_cmd=None):
     if not script_name.startswith('scripts/'):
         script_name = 'scripts/{}'.format(script_name)
-    return 'PYTHONPATH=. python {}'.format(script_name)
+    if args_cmd is None:
+        args_cmd = {}
+    args = ' '.join([script_name] + ['--{}={}'.format(key, value)
+                                     for key, value in args_cmd.items()])
+    return 'PYTHONPATH=. python {}'.format(args)
 
 
 def prepare(module, working_dir):
